@@ -1,0 +1,604 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>GenzFeast</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400..700&display=swap">
+<style>
+/* Layout: one long scrolling landing page (hero → how it works → students → canteens → CTA) plus hash-routed info pages sharing the header and footer. */
+:root {
+  --brand: #FF6B35;       /* Tangerine */
+  --ink: #2B1D16;         /* Espresso */
+  --bg: #FFF8F1;          /* Cream */
+  --surface: #FFFFFF;
+  --muted: #6E5D53;
+  --line: #EADFD3;
+  --sun: #FFC857;
+  --mint: #0B7A55;
+  --chip: #FFE6DA;
+  --on-brand: #2B1D16;
+  --footer-bg: #2B1D16;
+  --footer-fg: #F5E9DF;
+  --footer-muted: #B8A79B;
+  --display: "Bricolage Grotesque", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C1310; --surface: #2A1E18; --ink: #F7EDE5; --muted: #C2B1A5; --line: #3E2E25;
+    --chip: #4A2A1C; --footer-bg: #120C0A; --footer-fg: #F5E9DF; --footer-muted: #A8978B; --mint: #4CC79A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1C1310; --surface: #2A1E18; --ink: #F7EDE5; --muted: #C2B1A5; --line: #3E2E25;
+  --chip: #4A2A1C; --footer-bg: #120C0A; --footer-fg: #F5E9DF; --footer-muted: #A8978B; --mint: #4CC79A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font: 700 12px/1 var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand); }
+
+/* Header */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.site-header .wrap { display: flex; align-items: center; gap: 24px; min-height: 68px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand img { width: 36px; height: 40px; object-fit: contain; }
+.wordmark { font: 800 24px/1 var(--display); letter-spacing: -0.03em; }
+.wordmark b { color: var(--brand); font-weight: 800; }
+.nav { display: flex; gap: 22px; margin-left: auto; align-items: center; }
+.nav a { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 999px; font: 700 15px/1 var(--body); text-decoration: none; border: 0; cursor: pointer; }
+.btn-ink { background: var(--ink); color: var(--bg); }
+.btn-ink:hover { filter: brightness(1.15); }
+.btn-ghost { background: transparent; color: var(--on-brand); box-shadow: inset 0 0 0 2px var(--on-brand); }
+.btn-ghost:hover { background: rgba(43, 29, 22, 0.08); }
+.nav .btn { min-height: 42px; padding: 0 18px; color: var(--bg); }
+@media (max-width: 760px) { .nav a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero { background: var(--brand); color: var(--on-brand); overflow: hidden; position: relative; }
+.hero::after { content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%; background: var(--sun); right: -140px; top: -180px; opacity: 0.9; }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; padding-block: 72px 0; }
+.hero h1 { font-size: clamp(44px, 7vw, 84px); font-weight: 800; letter-spacing: -0.04em; color: var(--on-brand); }
+.hero h1 span { display: block; color: #FFFFFF; }
+.hero .lede { font-size: 19px; max-width: 30em; margin-top: 20px; color: var(--on-brand); }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; padding-bottom: 72px; }
+.hero .btn-ink { background: #2B1D16; color: #FFF8F1; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.chips span { background: rgba(255, 255, 255, 0.35); color: #2B1D16; border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 600; }
+
+/* Phone mockup */
+.phone { justify-self: center; align-self: end; width: 300px; max-width: 100%; background: #2B1D16; border-radius: 44px 44px 0 0; padding: 14px 14px 0; box-shadow: 0 30px 60px rgba(43, 29, 22, 0.35); }
+.screen { background: #FFF8F1; color: #2B1D16; border-radius: 32px 32px 0 0; padding: 22px 18px 28px; display: flex; flex-direction: column; gap: 14px; }
+.screen .tick { width: 56px; height: 56px; border-radius: 50%; background: #DDF4EA; color: #0B6B4B; display: grid; place-items: center; margin: 6px auto 0; }
+.screen h3 { text-align: center; font-size: 22px; }
+.screen .sub { text-align: center; font-size: 13px; color: #6E5D53; }
+.code { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.code span { aspect-ratio: 3 / 4; border-radius: 12px; background: #FFFFFF; border: 2px solid #FFD8C6; display: grid; place-items: center; font: 800 24px/1 var(--display); font-variant-numeric: tabular-nums; }
+.order-line { display: flex; justify-content: space-between; font-size: 14px; padding: 10px 12px; background: #FFFFFF; border-radius: 14px; }
+.order-line b { font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-self: center; padding: 6px 12px; border-radius: 999px; background: #FFE6DA; color: #B23C0E; font-size: 12px; font-weight: 700; }
+
+/* Sections */
+section.block { padding-block: 96px; }
+.section-head { display: flex; flex-direction: column; gap: 12px; max-width: 640px; margin-bottom: 48px; }
+.section-head h2 { font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; }
+.section-head p { color: var(--muted); font-size: 18px; }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; list-style: none; padding: 0; margin: 0; counter-reset: step; }
+.steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 28px 24px; display: flex; flex-direction: column; gap: 12px; counter-increment: step; }
+.steps li::before { content: counter(step); width: 44px; height: 44px; border-radius: 50%; background: var(--brand); color: #2B1D16; display: grid; place-items: center; font: 800 20px/1 var(--display); }
+.steps h3 { font-size: 22px; }
+.steps p { color: var(--muted); font-size: 15px; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 32px; }
+.feature { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.feature .ico { width: 48px; height: 48px; border-radius: 16px; background: var(--chip); color: var(--brand); display: grid; place-items: center; }
+.feature h3 { font-size: 19px; }
+.feature p { color: var(--muted); font-size: 15px; }
+
+.menu-card { background: var(--surface); border: 1px solid var(--line); border-radius: 32px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.menu-card .row { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 20px; background: var(--bg); }
+.menu-card .thumb { width: 52px; height: 52px; border-radius: 16px; flex: 0 0 auto; }
+.menu-card .name { flex: 1; min-width: 0; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.menu-card .price { font-weight: 700; font-variant-numeric: tabular-nums; }
+.menu-card .add { min-width: 64px; height: 36px; border-radius: 999px; background: var(--ink); color: var(--bg); font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.menu-card .sold { opacity: 0.55; }
+.menu-card .sold .add { background: transparent; color: #B42318; box-shadow: inset 0 0 0 1.5px #B42318; }
+.veg, .nonveg { width: 14px; height: 14px; border-radius: 3px; display: inline-grid; place-items: center; flex: 0 0 auto; }
+.veg { border: 1.5px solid var(--mint); }
+.veg::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+.nonveg { border: 1.5px solid #B4532A; }
+.nonveg::after { content: ""; border-left: 3.5px solid transparent; border-right: 3.5px solid transparent; border-bottom: 6px solid #B4532A; }
+
+.canteens { background: #183153; color: #FFFFFF; border-radius: 40px; padding: 64px 56px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; }
+.canteens .eyebrow { color: var(--sun); }
+.canteens h2 { font-size: clamp(30px, 4vw, 46px); font-weight: 800; color: #FFFFFF; }
+.canteens .intro p { color: #C9D5E6; margin-top: 16px; font-size: 17px; }
+.roles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.role { background: #23426B; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.role h3 { font-size: 20px; color: #FFFFFF; }
+.role ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; color: #DCE5F1; font-size: 15px; }
+.role li { display: flex; gap: 10px; }
+.role li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); margin-top: 9px; flex: 0 0 auto; }
+.role.wide { grid-column: 1 / -1; background: transparent; box-shadow: inset 0 0 0 1.5px #2E4F7A; }
+
+.cta { background: var(--sun); color: #2B1D16; border-radius: 40px; padding: 56px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+.cta h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; max-width: 16em; color: #2B1D16; }
+.cta p { margin-top: 10px; max-width: 34em; color: #4A372C; }
+.cta .btn-ink { background: #2B1D16; color: #FFF8F1; }
+
+/* Info pages */
+.page { padding-block: 64px 96px; }
+.page-head { background: var(--brand); color: #2B1D16; }
+.page-head .wrap { padding-block: 56px; display: flex; flex-direction: column; gap: 12px; }
+.page-head .eyebrow { color: #2B1D16; opacity: 0.75; }
+.page-head h1 { font-size: clamp(38px, 6vw, 64px); font-weight: 800; color: #2B1D16; }
+.page-head p { max-width: 38em; font-size: 18px; color: #2B1D16; }
+.prose { max-width: 760px; display: flex; flex-direction: column; gap: 16px; }
+.prose h2 { font-size: 28px; margin-top: 28px; }
+.prose h3 { font-size: 20px; margin-top: 12px; }
+.prose p, .prose li { color: var(--muted); }
+.prose strong { color: var(--ink); }
+.prose ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+.updated { font-size: 14px; color: var(--muted); }
+.note { background: var(--chip); border-radius: 20px; padding: 16px 20px; font-size: 15px; color: var(--ink); }
+.ph { background: var(--sun); color: #2B1D16; border-radius: 6px; padding: 0 6px; font-weight: 600; white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 700; color: var(--ink); }
+td { color: var(--muted); }
+
+.faq { display: flex; flex-direction: column; gap: 12px; max-width: 820px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 0 22px; }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; font-weight: 700; font-size: 17px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 700 26px/1 var(--display); color: var(--brand); flex: 0 0 auto; }
+.faq details[open] summary::after { content: "−"; }
+.faq details > div { padding-bottom: 20px; color: var(--muted); display: flex; flex-direction: column; gap: 10px; }
+.faq-group { font: 800 22px/1.2 var(--display); margin-top: 28px; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.contact-card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.contact-card span:first-child { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand); }
+.contact-card strong { font-size: 17px; overflow-wrap: anywhere; }
+
+.about-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+.about-values div { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.about-values h3 { font-size: 19px; }
+.about-values p { font-size: 15px; }
+
+/* Footer */
+.site-footer { background: var(--footer-bg); color: var(--footer-fg); }
+.site-footer .wrap { padding-block: 56px 40px; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+.site-footer .brand img { width: 40px; height: 40px; }
+.site-footer .wordmark { color: #FFFFFF; }
+.site-footer p { color: var(--footer-muted); font-size: 15px; margin-top: 14px; max-width: 26em; }
+.site-footer h4 { margin: 0 0 14px; font: 700 13px/1 var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--footer-muted); }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.site-footer ul a { text-decoration: none; color: var(--footer-fg); font-weight: 500; }
+.site-footer ul a:hover { color: var(--brand); }
+.legal { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.legal .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding-block: 20px; font-size: 13px; color: var(--footer-muted); }
+
+@media (max-width: 960px) {
+  .hero .wrap, .split, .canteens { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .canteens { padding: 40px 24px; }
+  .contact-grid, .about-values { grid-template-columns: 1fr; }
+  .site-footer .wrap { grid-template-columns: 1fr 1fr; }
+  .site-footer .wrap > :first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .steps, .feature-list, .roles { grid-template-columns: 1fr; }
+  section.block { padding-block: 64px; }
+  .hero .wrap { padding-block: 48px 0; }
+  .hero .actions { padding-bottom: 48px; }
+  .cta { padding: 36px 24px; }
+}
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="GenzFeast home">
+      <img src="mark.png" alt="">
+      <span class="wordmark">Genz<b>Feast</b></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#students">For students</a>
+      <a href="#canteens">For canteens</a>
+      <a href="#about">About us</a>
+      <a class="btn btn-ink" href="#contact">Bring it to your campus</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div data-view="home">
+  <section class="hero" id="home">
+    <div class="wrap">
+      <div>
+        <h1>Skip the queue.<span>Grab the good stuff.</span></h1>
+        <p class="lede">GenzFeast is your college canteen in your pocket. Order between classes, pay with UPI, and pick up with a code when it's ready.</p>
+        <div class="chips" aria-label="Highlights">
+          <span>UPI payments</span><span>Veg &amp; non-veg marked</span><span>Pickup code on your phone</span>
+        </div>
+        <div class="actions">
+          <a class="btn btn-ink" href="#how">See how it works</a>
+          <a class="btn btn-ghost" href="#canteens">I run a canteen</a>
+        </div>
+      </div>
+      <div class="phone" aria-label="App preview: order placed with pickup code">
+        <div class="screen">
+          <div class="tick"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h3>Order placed!</h3>
+          <p class="sub">Show this code at the counter</p>
+          <div class="code" aria-label="Pickup code 4 8 2 9 1 3"><span>4</span><span>8</span><span>2</span><span>9</span><span>1</span><span>3</span></div>
+          <span class="pill">Order placed · Block C Canteen</span>
+          <div class="order-line"><span>Masala Dosa × 2</span><b>₹120</b></div>
+          <div class="order-line"><span>Masala Chai × 1</span><b>₹15</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2>From craving to counter in four taps</h2>
+        <p>No standing in line during a 15-minute break. Order from class, collect when you get there.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Browse the menu</h3><p>See today's items from your canteen with prices, photos and clear veg or non-veg marks. Sold-out items are flagged.</p></li>
+        <li><h3>Add to cart</h3><p>Pick what you want and how many. The cart keeps the running total.</p></li>
+        <li><h3>Pay with UPI</h3><p>Checkout through Razorpay using any UPI app. If a payment fails, tap Pay again on the same order.</p></li>
+        <li><h3>Show your code</h3><p>Once payment goes through you get a 6-digit pickup code. Read it out at the counter and collect your food.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="students" style="padding-top: 0">
+    <div class="wrap split">
+      <div>
+        <div class="section-head" style="margin-bottom: 36px">
+          <span class="eyebrow">For students</span>
+          <h2>Made for the lunch rush</h2>
+        </div>
+        <div class="feature-list">
+          <div class="feature"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h3>Order ahead</h3><p>Place your order before the bell and spend the break eating, not queuing.</p></div>
+          <div class="feature"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 17h6"/></svg></span><h3>Pay your way</h3><p>UPI through Razorpay. Your order is confirmed only when the payment really lands.</p></div>
+          <div class="feature"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/></svg></span><h3>Code on your phone</h3><p>Your pickup code arrives as a notification and stays in My Orders until you collect.</p></div>
+          <div class="feature"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></svg></span><h3>Order history</h3><p>Upcoming and past orders in one place, with every item and amount.</p></div>
+          <div class="feature"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/></svg></span><h3>Tell the canteen</h3><p>Rate your food and send feedback straight to the canteen team.</p></div>
+          <div class="feature"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><h3>Your account, protected</h3><p>Forgot your password? Reset it with a one-time code sent to your phone.</p></div>
+        </div>
+      </div>
+      <div class="menu-card" aria-label="Sample menu">
+        <div class="row"><span class="thumb" style="background:#E6F3EC"></span><span class="name"><i class="veg" role="img" aria-label="Veg"></i>Masala Dosa</span><span class="price">₹60</span><span class="add">ADD</span></div>
+        <div class="row"><span class="thumb" style="background:#FFE6DA"></span><span class="name"><i class="nonveg" role="img" aria-label="Non-veg"></i>Chicken Puff</span><span class="price">₹35</span><span class="add">ADD</span></div>
+        <div class="row"><span class="thumb" style="background:#FFF1D6"></span><span class="name"><i class="veg" role="img" aria-label="Veg"></i>Masala Chai</span><span class="price">₹15</span><span class="add">ADD</span></div>
+        <div class="row"><span class="thumb" style="background:#EDE7FB"></span><span class="name"><i class="veg" role="img" aria-label="Veg"></i>Paneer Roll</span><span class="price">₹70</span><span class="add">ADD</span></div>
+        <div class="row sold"><span class="thumb" style="background:#ECE8E3"></span><span class="name"><i class="veg" role="img" aria-label="Veg"></i>Veg Biryani</span><span class="price">₹90</span><span class="add">Sold out</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="canteens" style="padding-top: 0">
+    <div class="wrap">
+      <div class="canteens">
+        <div class="intro">
+          <span class="eyebrow">For canteens</span>
+          <h2 style="margin-top: 12px">Run a calmer counter</h2>
+          <p>Every canteen gets its own branded GenzFeast app with its own menu, staff and orders. Students only ever see their own campus canteen.</p>
+          <p>Orders arrive already paid, so the counter becomes a quick code check and a hand-over.</p>
+        </div>
+        <div class="roles">
+          <div class="role">
+            <h3>Counter staff</h3>
+            <ul>
+              <li>See incoming paid orders</li>
+              <li>Verify the pickup code and mark delivered</li>
+              <li>Switch an item to sold out in one tap</li>
+            </ul>
+          </div>
+          <div class="role">
+            <h3>Canteen manager</h3>
+            <ul>
+              <li>Add and edit menu items with photos</li>
+              <li>Manage staff and student accounts</li>
+              <li>Set up categories and departments</li>
+              <li>Read and resolve feedback</li>
+            </ul>
+          </div>
+          <div class="role wide">
+            <h3>Payments you can trust</h3>
+            <ul>
+              <li>Prices come from your menu, never from the phone, and payments are confirmed directly by Razorpay before an order counts as placed.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="join" style="padding-top: 0">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <h2>Bring GenzFeast to your campus</h2>
+          <p>Talk to us about setting up your canteen. We'll create your canteen account, your first manager login and your branded app.</p>
+        </div>
+        <a class="btn btn-ink" href="#contact">Contact us</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div data-view="about" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">About us</span><h1>Lunch breaks are short. Queues shouldn't eat them.</h1><p>GenzFeast connects college canteens with the students and staff they feed.</p></div></div>
+  <div class="wrap page">
+    <div class="prose">
+      <h2 style="margin-top:0">Why we built it</h2>
+      <p>On most campuses the canteen is busiest in the same fifteen minutes every day. Students spend the break in line, canteen staff juggle cash and change, and popular items run out while people are still waiting to ask for them.</p>
+      <p>GenzFeast moves the ordering and paying out of the queue. Students order from their phones, pay with UPI, and walk up with a pickup code. The counter only has to check the code and hand over the food.</p>
+      <h2>Built for each canteen</h2>
+      <p>Every canteen on GenzFeast runs as its own space, with its own menu, staff, students and orders, and its own branded app. One canteen can never see another's data.</p>
+      <h2>What we care about</h2>
+      <div class="about-values">
+        <div><h3>Time back</h3><p>Every feature is judged by whether it gets someone fed faster.</p></div>
+        <div><h3>Honest payments</h3><p>An order counts only when the payment is confirmed by the payment provider.</p></div>
+        <div><h3>Listening</h3><p>Feedback goes straight to the people who cook and serve.</p></div>
+      </div>
+      <h2>Get in touch</h2>
+      <p>Want GenzFeast at your college, or have a question? <a href="#contact">Contact us</a> or visit <a href="#help">Help &amp; Support</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div data-view="contact" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">Contact us</span><h1>Let's talk</h1><p>Bringing GenzFeast to your campus, or need a hand with the app? Here's how to reach us.</p></div></div>
+  <div class="wrap page">
+    <div class="contact-grid" style="margin-top: 0">
+      <div class="contact-card"><span>Email</span><strong><span class="ph">[support email]</span></strong><p class="updated">For questions and support</p></div>
+      <div class="contact-card"><span>Phone</span><strong><span class="ph">[support phone]</span></strong><p class="updated"><span class="ph">[support hours]</span></p></div>
+      <div class="contact-card"><span>Office</span><strong><span class="ph">[office address]</span></strong><p class="updated">Visits by appointment</p></div>
+    </div>
+    <div class="about-values" style="margin-top: 32px">
+      <div><h3>Canteen owners and colleges</h3><p>Want GenzFeast for your campus? Email us with your college name, canteen name and a contact number. We'll set up your canteen, your first manager login and your branded app.</p></div>
+      <div><h3>Students and staff</h3><p>For questions about an order, the menu or a refund, contact your canteen directly. Open the app and go to Contact Us in the side menu.</p></div>
+      <div><h3>Account problems</h3><p>Locked out or forgot your password? Most answers are in <a href="#help">Help &amp; Support</a>. If you're still stuck, email us.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRIVACY ============ -->
+<div data-view="privacy" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Privacy Policy</h1><p>What we collect when you use GenzFeast, why, and who it's shared with.</p></div></div>
+  <div class="wrap page">
+    <div class="prose">
+      <p class="updated">Last updated: <span class="ph">[date]</span></p>
+      <p class="note">This page describes how the GenzFeast app works today. It is a draft and should be reviewed by a legal advisor before publication.</p>
+      <h2>Who we are</h2>
+      <p>GenzFeast (<span class="ph">[legal entity name]</span>) provides a food ordering app for college canteens. Each canteen ("your canteen") runs its own space on GenzFeast and decides who can use it.</p>
+      <h2>What we collect</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Information</th><th>Why we need it</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Account details:</strong> name, username, mobile number, email, gender</td><td>To create your account, sign you in and let your canteen know who placed an order</td></tr>
+            <tr><td><strong>Campus details:</strong> category (for example Student or Teaching Staff) and, optionally, department</td><td>Set by you at registration so your canteen knows who its users are</td></tr>
+            <tr><td><strong>Password</strong></td><td>Stored only as a one-way hash (Argon2id). We never see or store your actual password</td></tr>
+            <tr><td><strong>Orders:</strong> items, quantities, amounts, status and pickup code</td><td>To prepare, track and hand over your food, and to show your order history</td></tr>
+            <tr><td><strong>Payment records:</strong> payment status and Razorpay reference IDs</td><td>To confirm your order. We do not receive or store your UPI PIN or bank details</td></tr>
+            <tr><td><strong>Device token</strong> for push notifications</td><td>To send your pickup code and password-reset codes to your phone</td></tr>
+            <tr><td><strong>Feedback</strong> you submit, and your email if you ask to be contacted</td><td>So your canteen can read and respond to it</td></tr>
+            <tr><td><strong>Security logs:</strong> sign-ins, sign-outs, failed attempts and order events</td><td>To protect your account and investigate problems</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>Who can see your information</h2>
+      <ul>
+        <li><strong>Your canteen's manager and staff</strong> can see the orders you place with them. Managers can see the accounts in their canteen and the feedback you send. Staff never see your pickup code; they can only check the code you read out.</li>
+        <li><strong>Other canteens cannot see your data.</strong> Each canteen is kept separate.</li>
+        <li><strong>Service providers</strong> that run parts of the service for us:
+          <ul>
+            <li>Razorpay, for UPI payments</li>
+            <li>Supabase, which hosts our database</li>
+            <li>Google Firebase Cloud Messaging, for push notifications</li>
+            <li>MSG91, for SMS codes where your canteen has SMS turned on</li>
+            <li>Railway, which stores menu photos</li>
+          </ul>
+        </li>
+      </ul>
+      <p>We do not sell your personal information or use it for advertising.</p>
+      <h2>How long we keep it</h2>
+      <p>Order and payment records are kept so that canteens have an accurate history of sales and payments. When an account is deactivated it stops working, but past orders stay linked to it. <span class="ph">[Add your retention period]</span></p>
+      <h2>Your choices</h2>
+      <ul>
+        <li>Update your name, email and other profile details in the app under Profile.</li>
+        <li>Change your password at any time under Profile.</li>
+        <li>To close your account or request a copy of your data, contact your canteen or <a href="#help">our support team</a>.</li>
+      </ul>
+      <h2>Children</h2>
+      <p>GenzFeast is intended for college students and staff. <span class="ph">[Confirm minimum age]</span></p>
+      <h2>Changes to this policy</h2>
+      <p>If we change this policy we will update the date at the top of this page.</p>
+      <h2>Contact</h2>
+      <p>Questions about privacy: <span class="ph">[privacy email]</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECURITY ============ -->
+<div data-view="security" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Security</h1><p>How we protect your account, your payments and your canteen's data.</p></div></div>
+  <div class="wrap page">
+    <div class="prose">
+      <h2 style="margin-top:0">Each canteen is walled off</h2>
+      <p>Every canteen's menu, users, orders and feedback are kept separate. This separation is checked twice: once by our application, and again by the database itself, so a mistake in one layer is not enough to expose another canteen's data.</p>
+      <h2>Your account</h2>
+      <ul>
+        <li><strong>Passwords are hashed</strong> with Argon2id, a modern algorithm designed to resist cracking. Nobody at GenzFeast or your canteen can read your password.</li>
+        <li><strong>Short-lived sign-in.</strong> Your session uses tokens that expire after 30 minutes and are renewed securely in the background. Signing out ends that renewal.</li>
+        <li><strong>Lock after repeated failures.</strong> After 5 failed sign-in attempts your account is locked. Resetting your password with a one-time code unlocks it.</li>
+        <li><strong>One-time reset codes</strong> are sent by SMS or push notification and are stored only in hashed form.</li>
+      </ul>
+      <h2>Your payments</h2>
+      <ul>
+        <li>Payments are handled by Razorpay. GenzFeast never sees your UPI PIN or bank details.</li>
+        <li>An order is marked paid only when Razorpay confirms it to our server with a signed message. A payment screen on the phone alone cannot mark an order as paid.</li>
+        <li>Prices are always taken from the canteen's menu on our server, never from the app.</li>
+      </ul>
+      <h2>Your pickup code</h2>
+      <ul>
+        <li>The 6-digit code is created once your payment succeeds and is sent only to you.</li>
+        <li>Counter staff cannot look it up. They type in the code you read out and the app tells them whether it matches.</li>
+        <li>Each code works once. Every attempt, right or wrong, is logged.</li>
+      </ul>
+      <h2>Records we keep</h2>
+      <p>Sign-ins, account locks, order changes and payment events are recorded so problems can be traced. Change history for menu items, orders, payments and feedback is written by the database itself and cannot be edited by the app.</p>
+      <h2>Report a security issue</h2>
+      <p>If you find a vulnerability, please email <span class="ph">[security email]</span> with details. Please don't test against other people's accounts or data.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TERMS ============ -->
+<div data-view="terms" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Terms of Service</h1><p>The rules for using GenzFeast to order from your campus canteen.</p></div></div>
+  <div class="wrap page">
+    <div class="prose">
+      <p class="updated">Last updated: <span class="ph">[date]</span></p>
+      <p class="note">This is a draft based on how the app works today. Have it reviewed by a legal advisor before publication.</p>
+      <h2>1. The service</h2>
+      <p>GenzFeast (<span class="ph">[legal entity name]</span>) provides software that lets you order and pay for food from your college canteen. The food itself is prepared, sold and handed over by your canteen, which is responsible for its menu, prices, quality and hygiene.</p>
+      <h2>2. Your account</h2>
+      <ul>
+        <li>You register with your own canteen and can only order from that canteen.</li>
+        <li>Give accurate details and keep your password private. You are responsible for orders placed from your account.</li>
+        <li>Your account locks after 5 failed sign-in attempts. Reset your password to unlock it.</li>
+        <li>Your canteen may deactivate an account, for example when someone leaves the college.</li>
+      </ul>
+      <h2>3. Ordering and payment</h2>
+      <ul>
+        <li>Prices are set by your canteen and shown in Indian rupees.</li>
+        <li>Payment is by UPI through Razorpay. Your order is placed only once the payment is confirmed.</li>
+        <li>If a payment fails you can try again on the same order. You can have only one unpaid order open at a time.</li>
+        <li>Items marked sold out cannot be ordered.</li>
+      </ul>
+      <h2>4. Pickup</h2>
+      <ul>
+        <li>Collect your order from the canteen counter and read out your 6-digit pickup code.</li>
+        <li>Don't share your code. Whoever presents it can collect the order.</li>
+        <li>Once the order is marked delivered, the code can't be used again.</li>
+      </ul>
+      <h2>5. Cancellations and refunds</h2>
+      <p>Orders can't be cancelled from the app once placed. If something goes wrong with an order or payment, contact your canteen; refunds are handled by the canteen. <span class="ph">[Add refund timelines]</span></p>
+      <h2>6. Acceptable use</h2>
+      <p>Don't misuse the service: no fake orders, no attempts to access other people's accounts or another canteen's data, and no interfering with the app or its servers.</p>
+      <h2>7. Feedback</h2>
+      <p>Feedback you send goes to your canteen. Keep it respectful.</p>
+      <h2>8. Availability and liability</h2>
+      <p>We work to keep GenzFeast running but can't promise it will always be available. <span class="ph">[Add limitation of liability clause]</span></p>
+      <h2>9. Changes</h2>
+      <p>We may update these terms. The date at the top shows the latest version.</p>
+      <h2>10. Governing law and contact</h2>
+      <p>These terms are governed by the laws of India. <span class="ph">[Jurisdiction]</span> Questions: <span class="ph">[support email]</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HELP ============ -->
+<div data-view="help" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Help &amp; Support</h1><p>Answers to common questions. Still stuck? Contact details are at the bottom.</p></div></div>
+  <div class="wrap page">
+    <div class="faq">
+      <h2 class="faq-group" style="margin-top:0">Account</h2>
+      <details><summary>How do I get the app?</summary><div><p>Each canteen has its own GenzFeast app. Ask your canteen for the download link for your campus.</p></div></details>
+      <details><summary>I forgot my password</summary><div><p>On the sign-in screen, tap Forgot password and enter your username. You'll get a one-time code by SMS or as a notification, depending on your canteen. Enter the code and choose a new password.</p></div></details>
+      <details><summary>My account is locked</summary><div><p>Accounts lock after 5 failed sign-in attempts. Use Forgot password to reset your password; that unlocks your account. There's no automatic unlock after waiting.</p></div></details>
+      <details><summary>Can teaching or non-teaching staff order?</summary><div><p>Not yet. Staff accounts can sign in, update their profile, contact the canteen and send feedback. Ordering is currently available to students.</p></div></details>
+
+      <h2 class="faq-group">Orders and payment</h2>
+      <details><summary>My payment failed. What now?</summary><div><p>Open the order in My Orders and tap Pay again. You'll pay for the same order, so you won't end up with a duplicate.</p></div></details>
+      <details><summary>Money left my account but the order says payment failed</summary><div><p>UPI confirmations can take a few minutes. Check My Orders again shortly. If it still shows failed, contact your canteen with the order details.</p></div></details>
+      <details><summary>Why can't I place a new order?</summary><div><p>You can only have one unpaid order at a time. Finish paying for it in My Orders first.</p></div></details>
+      <details><summary>Can I cancel an order?</summary><div><p>Orders can't be cancelled from the app. Talk to your canteen staff.</p></div></details>
+
+      <h2 class="faq-group">Pickup</h2>
+      <details><summary>Where is my pickup code?</summary><div><p>It's sent as a notification when your payment succeeds, and it's always shown on the order in My Orders until you collect your food.</p></div></details>
+      <details><summary>The counter says my code is wrong</summary><div><p>Check that you're reading the code for the right order in My Orders. Each code works only once, so a delivered order's code won't work again.</p></div></details>
+
+      <h2 class="faq-group">For canteens</h2>
+      <details><summary>How do we join GenzFeast?</summary><div><p>Contact us below. We set up your canteen, create your first manager account and prepare your branded app. Your manager can then add staff, students and the menu.</p></div></details>
+      <details><summary>How do staff mark an item sold out?</summary><div><p>In the Products screen, flip the switch next to the item. Students see it as sold out straight away.</p></div></details>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card"><span>Email</span><strong><span class="ph">[support email]</span></strong></div>
+      <div class="contact-card"><span>Phone</span><strong><span class="ph">[support phone]</span></strong></div>
+      <div class="contact-card"><span>Your canteen</span><strong>Use Contact Us in the app</strong></div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#home"><img src="mark-white.png" alt=""><span class="wordmark">Genz<b>Feast</b></span></a>
+      <p>Order ahead from your college canteen. Pay with UPI, pick up with a code.</p>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About us</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Learn more</h4>
+      <ul>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#terms">Terms of Service</a></li>
+        <li><a href="#help">Help &amp; Support</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal"><div class="wrap"><span>© 2026 GenzFeast. All rights reserved.</span><span>Made for campus canteens in India</span></div></div>
+</footer>
+
+<script>
+(function () {
+  var pages = ["about", "contact", "privacy", "security", "terms", "help"];
+  var views = document.querySelectorAll("[data-view]");
+  function route() {
+    var id = (location.hash || "").slice(1);
+    var page = pages.indexOf(id) >= 0 ? id : "home";
+    views.forEach(function (v) { v.hidden = v.getAttribute("data-view") !== page; });
+    if (page !== "home") { window.scrollTo(0, 0); return; }
+    var target = id && document.getElementById(id);
+    if (target) { requestAnimationFrame(function () { target.scrollIntoView(); }); }
+    else { window.scrollTo(0, 0); }
+  }
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+
+</body></html>
