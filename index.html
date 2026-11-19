@@ -54,7 +54,7 @@ p { margin: 0; }
 .wordmark b { color: var(--brand); font-weight: 800; }
 .nav { display: flex; gap: 22px; margin-left: auto; align-items: center; }
 .nav a { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--muted); }
-.nav a:hover { color: var(--ink); }
+.nav a:not(.btn):hover { color: var(--ink); }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 999px; font: 700 15px/1 var(--body); text-decoration: none; border: 0; cursor: pointer; }
 .btn-ink { background: var(--ink); color: var(--bg); }
 .btn-ink:hover { filter: brightness(1.15); }
@@ -373,9 +373,9 @@ td { color: var(--muted); }
   <div class="page-head"><div class="wrap"><span class="eyebrow">Contact us</span><h1>Let's talk</h1><p>Bringing GenzFeast to your campus, or need a hand with the app? Here's how to reach us.</p></div></div>
   <div class="wrap page">
     <div class="contact-grid" style="margin-top: 0">
-      <div class="contact-card"><span>Email</span><strong><span class="ph">[support email]</span></strong><p class="updated">For questions and support</p></div>
-      <div class="contact-card"><span>Phone</span><strong><span class="ph">[support phone]</span></strong><p class="updated"><span class="ph">[support hours]</span></p></div>
-      <div class="contact-card"><span>Office</span><strong><span class="ph">[office address]</span></strong><p class="updated">Visits by appointment</p></div>
+      <div class="contact-card"><span>Email</span><strong>sapthagiricatering.erode@gmail.com</strong><p class="updated">For questions and support</p></div>
+      <div class="contact-card"><span>Phone</span><strong>+91 98435 38406</strong><p class="updated"></p></div>
+      <div class="contact-card"><span>Office</span><strong>22A, Nakkeerar Street, Erode-638001</strong><p class="updated">Visits by appointment</p></div>
     </div>
     <div class="about-values" style="margin-top: 32px">
       <div><h3>Canteen owners and colleges</h3><p>Want GenzFeast for your campus? Email us with your college name, canteen name and a contact number. We'll set up your canteen, your first manager login and your branded app.</p></div>
@@ -390,10 +390,9 @@ td { color: var(--muted); }
   <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Privacy Policy</h1><p>What we collect when you use GenzFeast, why, and who it's shared with.</p></div></div>
   <div class="wrap page">
     <div class="prose">
-      <p class="updated">Last updated: <span class="ph">[date]</span></p>
-      <p class="note">This page describes how the GenzFeast app works today. It is a draft and should be reviewed by a legal advisor before publication.</p>
+      <p class="updated">Last updated: November 2026</p>
       <h2>Who we are</h2>
-      <p>GenzFeast (<span class="ph">[legal entity name]</span>) provides a food ordering app for college canteens. Each canteen ("your canteen") runs its own space on GenzFeast and decides who can use it.</p>
+      <p>GenzFeast (Sapthagiri Catering) provides a food ordering app for college canteens. Each canteen runs its own space on GenzFeast and decides who can use it.</p>
       <h2>What we collect</h2>
       <div class="table-scroll">
         <table>
@@ -401,11 +400,10 @@ td { color: var(--muted); }
           <tbody>
             <tr><td><strong>Account details:</strong> name, username, mobile number, email, gender</td><td>To create your account, sign you in and let your canteen know who placed an order</td></tr>
             <tr><td><strong>Campus details:</strong> category (for example Student or Teaching Staff) and, optionally, department</td><td>Set by you at registration so your canteen knows who its users are</td></tr>
-            <tr><td><strong>Password</strong></td><td>Stored only as a one-way hash (Argon2id). We never see or store your actual password</td></tr>
             <tr><td><strong>Orders:</strong> items, quantities, amounts, status and pickup code</td><td>To prepare, track and hand over your food, and to show your order history</td></tr>
-            <tr><td><strong>Payment records:</strong> payment status and Razorpay reference IDs</td><td>To confirm your order. We do not receive or store your UPI PIN or bank details</td></tr>
+            <tr><td><strong>Payment records:</strong> payment status and reference IDs</td><td>To confirm your order. We do not receive or store your UPI PIN or bank details</td></tr>
             <tr><td><strong>Device token</strong> for push notifications</td><td>To send your pickup code and password-reset codes to your phone</td></tr>
-            <tr><td><strong>Feedback</strong> you submit, and your email if you ask to be contacted</td><td>So your canteen can read and respond to it</td></tr>
+            <tr><td><strong>Feedback</strong> you submit, and whether you asked to be contacted about it</td><td>So your canteen can read and respond to it</td></tr>
             <tr><td><strong>Security logs:</strong> sign-ins, sign-outs, failed attempts and order events</td><td>To protect your account and investigate problems</td></tr>
           </tbody>
         </table>
@@ -416,29 +414,76 @@ td { color: var(--muted); }
         <li><strong>Other canteens cannot see your data.</strong> Each canteen is kept separate.</li>
         <li><strong>Service providers</strong> that run parts of the service for us:
           <ul>
-            <li>Razorpay, for UPI payments</li>
-            <li>Supabase, which hosts our database</li>
-            <li>Google Firebase Cloud Messaging, for push notifications</li>
-            <li>MSG91, for SMS codes where your canteen has SMS turned on</li>
-            <li>Railway, which stores menu photos</li>
+            <li><strong>Razorpay</strong>, which processes UPI payments. You enter your payment details with Razorpay, not with us; we receive only the payment status and a reference ID.</li>
+            <li><strong>Google Firebase Cloud Messaging</strong>, which delivers push notifications to your phone.</li>
+            <li><strong>MSG91</strong>, which delivers SMS codes where your canteen has SMS turned on.</li>
+            <li><strong>Railway</strong>, which hosts our servers, our database and the menu photos.</li>
           </ul>
         </li>
       </ul>
       <p>We do not sell your personal information or use it for advertising.</p>
       <h2>How long we keep it</h2>
-      <p>Order and payment records are kept so that canteens have an accurate history of sales and payments. When an account is deactivated it stops working, but past orders stay linked to it. <span class="ph">[Add your retention period]</span></p>
+      <p>Order and payment records are kept for <strong>8 years from the end of the financial year in which the order was placed</strong>, which is what Indian tax and accounting rules require of your canteen. When an account is deactivated it stops working, but its past orders stay on record for that period.</p>
+      <p>If you delete your account, those order records are kept for the same 8 years with your name, mobile number and email removed from them. <a href="#delete-account">Deleting your account</a> sets out exactly what is erased and what is kept.</p>
+      <h2>How we protect it</h2>
+      <p>Everything the app sends to our servers travels over an encrypted HTTPS (TLS) connection. Passwords and one-time codes are stored only as hashes, which cannot be read back by anyone, including us. <a href="#security">Security</a> goes through this in more detail.</p>
       <h2>Your choices</h2>
       <ul>
-        <li>Update your name, email and other profile details in the app under Profile.</li>
-        <li>Change your password at any time under Profile.</li>
-        <li>To close your account or request a copy of your data, contact your canteen or <a href="#help">our support team</a>.</li>
+        <li>Update your name, email and other profile details in the app under <strong>Profile</strong>.</li>
+        <li>Change your password at any time under <strong>Profile</strong>.</li>
+        <li><strong>Delete your account yourself</strong>, in the app under Profile &rarr; Delete account. See <a href="#delete-account">Deleting your account</a> for what happens to your data, and for how to ask us to close it if you can no longer sign in.</li>
+        <li>To request a copy of your data, email sapthagiricatering.erode@gmail.com from the address on your account.</li>
       </ul>
-      <h2>Children</h2>
-      <p>GenzFeast is intended for college students and staff. <span class="ph">[Confirm minimum age]</span></p>
+      <h2>Age</h2>
+      <p>GenzFeast is intended for college students and staff and is not directed at children. You must be at least 13 years old to hold an account, and if you are under 18 you should use GenzFeast with the agreement of a parent or guardian. If we learn that an account belongs to a child under 13, we will close it and erase its personal details.</p>
       <h2>Changes to this policy</h2>
       <p>If we change this policy we will update the date at the top of this page.</p>
       <h2>Contact</h2>
-      <p>Questions about privacy: <span class="ph">[privacy email]</span></p>
+      <p>Questions about privacy: sapthagiricatering.erode@gmail.com</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DELETE ACCOUNT ============ -->
+<div data-view="delete-account" hidden>
+  <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Deleting your account</h1><p>How to close your GenzFeast account, and exactly what happens to your data.</p></div></div>
+  <div class="wrap page">
+    <div class="prose">
+      <p class="updated">Last updated: November 2026</p>
+      <h2 style="margin-top:0">Delete it yourself, in the app</h2>
+      <ol>
+        <li>Open your canteen's GenzFeast app and sign in.</li>
+        <li>Open the side menu and tap <strong>Profile</strong>.</li>
+        <li>Tap <strong>Delete account</strong>.</li>
+        <li>Enter your password and confirm.</li>
+      </ol>
+      <p>Your account closes straight away and you are signed out on every device. This cannot be undone. Closing an account does not pause or hide it, and we cannot bring it back afterwards.</p>
+
+      <h2>Or ask us to do it</h2>
+      <p>If you have uninstalled the app, forgotten your password, or cannot sign in for any other reason, email <strong>sapthagiricatering.erode@gmail.com</strong> from the address on your account, or call <strong>+91 98435 38406</strong>. Tell us your name, your canteen and the mobile number you registered with. We will check who you are, close the account within <strong>7 working days</strong>, and email you when it is done.</p>
+
+      <h2>What is erased</h2>
+      <ul>
+        <li>Your name, mobile number, email address and gender.</li>
+        <li>Your password.</li>
+        <li>Your campus category and your department.</li>
+        <li>Every device registered for notifications, so nothing further can be sent to your phone.</li>
+        <li>Every signed-in session, on every device.</li>
+      </ul>
+
+      <h2>What is kept, and why</h2>
+      <ul>
+        <li><strong>Order and payment records</strong> are kept for 8 years from the end of the financial year in which the order was placed, because Indian tax and accounting rules require your canteen to hold them. Once your account is closed these records carry no name, mobile number or email &mdash; nothing in them points back to you.</li>
+        <li><strong>Security and order logs</strong> (sign-ins, account locks, order events) are kept for the same period, recorded against an account reference rather than your name.</li>
+        <li><strong>Feedback you sent</strong> stays with your canteen. It never carried your contact details, and after closure there is no name attached to it.</li>
+      </ul>
+      <p>We keep no separate copy of your personal details once the account is closed. Your mobile number is released at the same moment, so you can register again with the same number whenever you like &mdash; it will be a new account, with no link to the old one.</p>
+
+      <h2>Before you delete</h2>
+      <p>If you have an order that is paid for and still waiting at the counter, collect it first &mdash; the app will ask you to. An order you never paid for, or one whose payment failed, does not hold anything up.</p>
+
+      <h2>Questions</h2>
+      <p>Email sapthagiricatering.erode@gmail.com. See also our <a href="#privacy">Privacy Policy</a>.</p>
     </div>
   </div>
 </div>
@@ -450,16 +495,18 @@ td { color: var(--muted); }
     <div class="prose">
       <h2 style="margin-top:0">Each canteen is walled off</h2>
       <p>Every canteen's menu, users, orders and feedback are kept separate. This separation is checked twice: once by our application, and again by the database itself, so a mistake in one layer is not enough to expose another canteen's data.</p>
+      <h2>Everything travels encrypted</h2>
+      <p>Every request between the app and our servers goes over HTTPS (TLS). Nothing the app sends &mdash; your sign-in, your order, your pickup code &mdash; travels in the clear.</p>
       <h2>Your account</h2>
       <ul>
-        <li><strong>Passwords are hashed</strong> with Argon2id, a modern algorithm designed to resist cracking. Nobody at GenzFeast or your canteen can read your password.</li>
+        <li><strong>Passwords are hashed.</strong> Nobody at GenzFeast or your canteen can read your password.</li>
         <li><strong>Short-lived sign-in.</strong> Your session uses tokens that expire after 30 minutes and are renewed securely in the background. Signing out ends that renewal.</li>
         <li><strong>Lock after repeated failures.</strong> After 5 failed sign-in attempts your account is locked. Resetting your password with a one-time code unlocks it.</li>
         <li><strong>One-time reset codes</strong> are sent by SMS or push notification and are stored only in hashed form.</li>
       </ul>
       <h2>Your payments</h2>
       <ul>
-        <li>Payments are handled by Razorpay. GenzFeast never sees your UPI PIN or bank details.</li>
+        <li>Payments are handled by <strong>Razorpay</strong>. GenzFeast never sees your UPI PIN or bank details.</li>
         <li>An order is marked paid only when Razorpay confirms it to our server with a signed message. A payment screen on the phone alone cannot mark an order as paid.</li>
         <li>Prices are always taken from the canteen's menu on our server, never from the app.</li>
       </ul>
@@ -472,7 +519,7 @@ td { color: var(--muted); }
       <h2>Records we keep</h2>
       <p>Sign-ins, account locks, order changes and payment events are recorded so problems can be traced. Change history for menu items, orders, payments and feedback is written by the database itself and cannot be edited by the app.</p>
       <h2>Report a security issue</h2>
-      <p>If you find a vulnerability, please email <span class="ph">[security email]</span> with details. Please don't test against other people's accounts or data.</p>
+      <p>If you find a vulnerability, please email sapthagiricatering.erode@gmail.com with details. Please don't test against other people's accounts or data.</p>
     </div>
   </div>
 </div>
@@ -482,21 +529,22 @@ td { color: var(--muted); }
   <div class="page-head"><div class="wrap"><span class="eyebrow">Learn more</span><h1>Terms of Service</h1><p>The rules for using GenzFeast to order from your campus canteen.</p></div></div>
   <div class="wrap page">
     <div class="prose">
-      <p class="updated">Last updated: <span class="ph">[date]</span></p>
-      <p class="note">This is a draft based on how the app works today. Have it reviewed by a legal advisor before publication.</p>
+      <p class="updated">Last updated: November 2026</p>
       <h2>1. The service</h2>
-      <p>GenzFeast (<span class="ph">[legal entity name]</span>) provides software that lets you order and pay for food from your college canteen. The food itself is prepared, sold and handed over by your canteen, which is responsible for its menu, prices, quality and hygiene.</p>
+      <p>GenzFeast (Sapthagiri Catering) provides software that lets you order and pay for food from your college canteen. The food itself is prepared, sold and handed over by your canteen, which is responsible for its menu, prices, quality and hygiene.</p>
+      <p>These terms are an agreement between you and <strong>Sapthagiri Catering</strong>, trading as GenzFeast, of 22A, Nakkeerar Street, Erode-638001, Tamil Nadu, India &mdash; email sapthagiricatering.erode@gmail.com, phone +91 98435 38406. By using the app you accept these terms and our <a href="#privacy">Privacy Policy</a>.</p>
       <h2>2. Your account</h2>
       <ul>
         <li>You register with your own canteen and can only order from that canteen.</li>
         <li>Give accurate details and keep your password private. You are responsible for orders placed from your account.</li>
         <li>Your account locks after 5 failed sign-in attempts. Reset your password to unlock it.</li>
         <li>Your canteen may deactivate an account, for example when someone leaves the college.</li>
+        <li>You can close your own account at any time, in the app under Profile &rarr; Delete account. See <a href="#delete-account">Deleting your account</a>.</li>
       </ul>
       <h2>3. Ordering and payment</h2>
       <ul>
         <li>Prices are set by your canteen and shown in Indian rupees.</li>
-        <li>Payment is by UPI through Razorpay. Your order is placed only once the payment is confirmed.</li>
+        <li>Payment is by UPI through <strong>Razorpay</strong>, our payment provider. Your order is placed only once Razorpay confirms the payment to us.</li>
         <li>If a payment fails you can try again on the same order. You can have only one unpaid order open at a time.</li>
         <li>Items marked sold out cannot be ordered.</li>
       </ul>
@@ -507,17 +555,20 @@ td { color: var(--muted); }
         <li>Once the order is marked delivered, the code can't be used again.</li>
       </ul>
       <h2>5. Cancellations and refunds</h2>
-      <p>Orders can't be cancelled from the app once placed. If something goes wrong with an order or payment, contact your canteen; refunds are handled by the canteen. <span class="ph">[Add refund timelines]</span></p>
+      <p>Orders can't be cancelled from the app once they are placed. If something goes wrong &mdash; food not handed over, a duplicate charge, or money debited against an order still showing as failed &mdash; contact your canteen first, through Contact Us in the app. Your canteen is the seller, so it decides whether a refund is due.</p>
+      <p>Where a refund is approved it is returned to the UPI account you paid from. Refunds are processed within <strong>7 working days</strong> of approval; your bank may take a little longer to show the money. If your canteen does not respond, email sapthagiricatering.erode@gmail.com with your order details and we will follow it up.</p>
       <h2>6. Acceptable use</h2>
       <p>Don't misuse the service: no fake orders, no attempts to access other people's accounts or another canteen's data, and no interfering with the app or its servers.</p>
       <h2>7. Feedback</h2>
       <p>Feedback you send goes to your canteen. Keep it respectful.</p>
       <h2>8. Availability and liability</h2>
-      <p>We work to keep GenzFeast running but can't promise it will always be available. <span class="ph">[Add limitation of liability clause]</span></p>
+      <p>We work to keep GenzFeast available whenever your canteen is open, but we cannot promise uninterrupted service: maintenance, network problems or an outage at our payment or messaging providers can interrupt it. Your canteen sets its own opening and ordering hours.</p>
+      <p>Our support team answers email and phone between 9:00 and 17:00 IST on working days.</p>
+      <p>GenzFeast provides the software; your canteen sells the food. We are not responsible for the quality, safety, hygiene or availability of the food, which is your canteen's responsibility. So far as the law allows, our liability for any claim relating to GenzFeast is limited to the amount you paid through the app for the order the claim relates to. Nothing in these terms limits any right you have under Indian consumer law that cannot be limited.</p>
       <h2>9. Changes</h2>
       <p>We may update these terms. The date at the top shows the latest version.</p>
       <h2>10. Governing law and contact</h2>
-      <p>These terms are governed by the laws of India. <span class="ph">[Jurisdiction]</span> Questions: <span class="ph">[support email]</span></p>
+      <p>These terms are governed by the laws of India. Questions: sapthagiricatering.erode@gmail.com</p>
     </div>
   </div>
 </div>
@@ -531,6 +582,7 @@ td { color: var(--muted); }
       <details><summary>How do I get the app?</summary><div><p>Each canteen has its own GenzFeast app. Ask your canteen for the download link for your campus.</p></div></details>
       <details><summary>I forgot my password</summary><div><p>On the sign-in screen, tap Forgot password and enter your username. You'll get a one-time code by SMS or as a notification, depending on your canteen. Enter the code and choose a new password.</p></div></details>
       <details><summary>My account is locked</summary><div><p>Accounts lock after 5 failed sign-in attempts. Use Forgot password to reset your password; that unlocks your account. There's no automatic unlock after waiting.</p></div></details>
+      <details><summary>How do I delete my account?</summary><div><p>In the app, open the side menu, tap Profile, then Delete account, and confirm with your password. Your account closes immediately and cannot be restored. If you can't sign in, email sapthagiricatering.erode@gmail.com and we'll close it for you. <a href="#delete-account">What happens to your data</a>.</p></div></details>
       <details><summary>Can teaching or non-teaching staff order?</summary><div><p>Not yet. Staff accounts can sign in, update their profile, contact the canteen and send feedback. Ordering is currently available to students.</p></div></details>
 
       <h2 class="faq-group">Orders and payment</h2>
@@ -549,8 +601,8 @@ td { color: var(--muted); }
     </div>
 
     <div class="contact-grid">
-      <div class="contact-card"><span>Email</span><strong><span class="ph">[support email]</span></strong></div>
-      <div class="contact-card"><span>Phone</span><strong><span class="ph">[support phone]</span></strong></div>
+      <div class="contact-card"><span>Email</span><strong>sapthagiricatering.erode@gmail.com</strong></div>
+      <div class="contact-card"><span>Phone</span><strong>+91 98435 38406</strong></div>
       <div class="contact-card"><span>Your canteen</span><strong>Use Contact Us in the app</strong></div>
     </div>
   </div>
@@ -560,7 +612,7 @@ td { color: var(--muted); }
 <footer class="site-footer">
   <div class="wrap">
     <div>
-      <a class="brand" href="#home"><img src="mark-white.png" alt=""><span class="wordmark">Genz<b>Feast</b></span></a>
+      <a class="brand" href="#home"><img src="markwhite.png" alt=""><span class="wordmark">Genz<b>Feast</b></span></a>
       <p>Order ahead from your college canteen. Pay with UPI, pick up with a code.</p>
     </div>
     <div>
@@ -576,6 +628,7 @@ td { color: var(--muted); }
         <li><a href="#privacy">Privacy</a></li>
         <li><a href="#security">Security</a></li>
         <li><a href="#terms">Terms of Service</a></li>
+        <li><a href="#delete-account">Delete your account</a></li>
         <li><a href="#help">Help &amp; Support</a></li>
       </ul>
     </div>
@@ -585,7 +638,7 @@ td { color: var(--muted); }
 
 <script>
 (function () {
-  var pages = ["about", "contact", "privacy", "security", "terms", "help"];
+  var pages = ["about", "contact", "privacy", "security", "terms", "delete-account", "help"];
   var views = document.querySelectorAll("[data-view]");
   function route() {
     var id = (location.hash || "").slice(1);
